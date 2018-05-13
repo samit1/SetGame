@@ -13,46 +13,36 @@ class ViewController: UIViewController {
     //    @IBOutlet weak var cardBtn: UIButton!
     
     @IBOutlet var cardBtns: [UIButton]!
-    // call this when the buttons first get loaded
-    //
-    //        didSet {
-    //
-    //            for card in game.cardsInPlay.indices {
-    //                if cardBtns.count >= card {
-    //                    cardBtns[card].setTitle(game.cardsInPlay[card].color.rawValue, for: UIControlState.normal)
-    //                }
-    //            }
-    //        }
-    
     
     @IBAction func dealMoreCardsBtnTapped(_ sender: UIButton) {
+        game.add3CardsToPlay()
+        updateViewFromModel()
     }
     
     
     @IBOutlet weak var deal3MoreCardsBtn: UIButton!
     @IBAction func cardBtnTapped(_ sender: UIButton) {
-//        let cardSelected = game.cardsInPlay[index(of: sender)
         
-        let selectedIndex = cardBtns.index(of: sender)
-        let selectedCard = game.cardsInPlay[selectedIndex!]
-        game.cardSelected(card: selectedCard)
-
+        if let selectedIndex = cardBtns.index(of: sender) {
+            if selectedIndex < game.cardsInPlay.count  {
+                let selectedCard = game.cardsInPlay[selectedIndex]
+                game.cardSelected(card: selectedCard)
+                updateViewFromModel()
+            }
+        }
     }
     
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         updateViewFromModel()
-        
     }
     
     private func updateViewFromModel() {
         for (index, card) in game.cardsInPlay.enumerated() {
             cardBtns[index].titleLabel?.numberOfLines = 0
-//            cardBtns[index].setAttributedTitle(setCardTitle(with: game.cardsInPlay.index(of: <#T##Card#>) , for: .normal)
             cardBtns[index].setAttributedTitle(setCardTitle(with: card), for: .normal)
         }
     }
@@ -64,9 +54,23 @@ class ViewController: UIViewController {
             NSAttributedStringKey.foregroundColor : CardToView.color[card.color]!.withAlphaComponent(CardToView.shading[card.shading]!)
         ]
         
-        let theTitle = CardToView.symbol[card.symbol]
         
-        let attrTitle = NSAttributedString(string: theTitle!, attributes: attributes)
+        var symbol = CardToView.symbol[card.symbol]
+        var titleReturn = symbol
+        switch card.num {
+        case .one:
+            titleReturn = symbol!
+        case .two:
+            titleReturn = symbol!
+            titleReturn! += symbol!
+        case.three:
+            titleReturn = symbol!
+            titleReturn! += symbol!
+            titleReturn! += symbol!
+            
+        }
+        
+        let attrTitle = NSAttributedString(string: titleReturn!, attributes: attributes)
         return attrTitle
         
     }
@@ -79,8 +83,8 @@ class ViewController: UIViewController {
 fileprivate struct CardToView {
     static let symbol: [Card.Symbol : String] = [.diamond: "▲", .squiggle: "●", .oval: "■"]
     static let color: [Card.Color : UIColor] = [.red: UIColor.red, .green: UIColor.green, .purple: UIColor.purple]
-    static let shading : [Card.Shading : CGFloat] = [.solid: -5, Card.Shading.open: 30, .striped: 10]
-    
+    static let shading : [Card.Shading : CGFloat] = [.solid: -5, Card.Shading.open: 50, .striped: 20]
+    static let number : [Card.Number : Int] = [Card.Number.one : 1, Card.Number.two : 2, Card.Number.three : 3]
     
     
 }
