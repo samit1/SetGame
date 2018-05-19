@@ -16,7 +16,7 @@ struct SetGame {
     private (set) var cardsSelected = [Card]() {
         didSet {
             for (i,card) in cardsSelected.enumerated() {
-                print("\(i): \(card.description) ")
+//                print("\(i): \(card.description) ")
             }
         }
     }
@@ -78,7 +78,7 @@ struct SetGame {
             cardsInPlay[indexOfMatch!] = cardDeck.remove(at: 0)
         }
         cardsSelected.removeAll()
-        print("found set")
+//        print("found set")
     }
     
     mutating func add3CardsToPlay() {
@@ -103,7 +103,7 @@ struct SetGame {
     init() {
         startNewGame()
         for x in cardDeck {
-            print(x.description)
+//            print(x.description)
         }
         
     }
@@ -125,7 +125,7 @@ struct SetGame {
     
     mutating private func shuffleCards() {
         for cardIndex in stride(from: cardDeck.count - 1 , to: -1, by: -1) {
-            print(cardIndex)
+//            print(cardIndex)
             let randomIndexToSwapWith = Int(arc4random_uniform(UInt32(cardDeck.count - 1)))
             let tmp = cardDeck[randomIndexToSwapWith] //this is the random one we swap with
             cardDeck[randomIndexToSwapWith] = cardDeck[cardIndex]

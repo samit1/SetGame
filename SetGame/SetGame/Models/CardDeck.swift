@@ -21,10 +21,6 @@ struct CardDeck {
     */
     private (set) var cardSet = [Card]()
 
-//    private let numVariations = Card.Number
-//    private let symbolVariations = Card.
-//    private let shadingVariations = [1,2,3]
-//    private let colorVariations = [1,2,3]
 //
     init() {
         for num in Card.Number.all {

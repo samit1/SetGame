@@ -10,7 +10,18 @@ import UIKit
 
 class ViewController: UIViewController {
     private var game = SetGame()
-    //    @IBOutlet weak var cardBtn: UIButton!
+    
+    
+    @IBOutlet weak var cardGrid: GridView! {
+        didSet {
+            
+            cardGrid.itemsToDisplay = game.cardsInPlay.count
+            
+        }
+    }
+    
+    
+    
     
     @IBOutlet var cardBtns: [UIButton]!
     
@@ -41,10 +52,7 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
-        for (index, card) in game.cardsInPlay.enumerated() {
-            cardBtns[index].titleLabel?.numberOfLines = 0
-            cardBtns[index].setAttributedTitle(setCardTitle(with: card), for: .normal)
-        }
+        cardGrid.itemsToDisplay = game.cardsInPlay.count
     }
     
     private func setCardTitle(with card: Card ) -> NSAttributedString {
